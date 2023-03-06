@@ -1,0 +1,14 @@
+.personDetail {
+  &-item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-label {
+    font-size: 15px;
+  }
+
+  &-value {
+    text-align: right;
+  }
+}

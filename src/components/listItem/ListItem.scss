@@ -1,0 +1,19 @@
+.item {
+  cursor: pointer;
+  padding: 15px 0px;
+  user-select: none;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgb(112, 116, 112);
+  }
+
+  &:hover {
+    background-color: rgb(27, 159, 12);
+    color: #fff;
+  }
+
+  &.active {
+    background-color: rgb(27, 159, 12);
+    color: #fff;
+  }
+}
