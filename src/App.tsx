@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import List from "../../components/list/List";
-import Search from "../../components/search/Search";
-import PersonDetail from "../../components/personDetail/PersonDetail";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { User } from "../../store/user/user.types";
-import { getUser } from "../../store/user/userAction";
-import { clearSearchResult, selectUser } from "../../store/user/user";
+import List from "./components/list/List";
+import Search from "./components/search/Search";
+import PersonDetail from "./components/personDetail/PersonDetail";
+import { useAppDispatch, useAppSelector } from "./store";
+import { User } from "./store/user/user.types";
+import { getUser } from "./store/user/userAction";
+import { clearSearchResult, selectUser } from "./store/user/user";
 import { debounce } from "lodash-es";
 import "./App.scss";
 
