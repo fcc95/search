@@ -6,6 +6,7 @@ export type UserResponse = {
 };
 
 export type User = {
+  id: string;
   birth_year: string;
   created: string;
   edited: string;

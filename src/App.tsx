@@ -3,9 +3,8 @@ import List from "./components/list/List";
 import Search from "./components/search/Search";
 import PersonDetail from "./components/personDetail/PersonDetail";
 import { useAppDispatch, useAppSelector } from "./store";
-import { User } from "./store/user/user.types";
 import { getUser } from "./store/user/userAction";
-import { clearSearchResult, selectUser } from "./store/user/user";
+import { clearSearchResult, selectUser } from "./store/user/userSlice";
 import { debounce } from "lodash-es";
 import "./App.scss";
 
@@ -33,8 +32,8 @@ const App = () => {
     };
   }, [debouncedSearch]);
 
-  const onToggleUser = (user: User | null) => {
-    dispatch(selectUser(user));
+  const onToggleUser = (userId: string) => {
+    dispatch(selectUser(userId));
   };
 
   async function handleChange(value: string) {

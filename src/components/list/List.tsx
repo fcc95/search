@@ -7,7 +7,7 @@ type IProps = {
   selectedUser: User | null;
   loading: boolean;
   error: boolean;
-  onToggleUser: (user: User | null) => void;
+  onToggleUser: (userId: string) => void;
 };
 
 const List = ({
@@ -31,13 +31,13 @@ const List = ({
 
   return (
     <div className="list">
-      {users?.map((user: User, index: number) => (
+      {users?.map((user: User) => (
         <ListItem
-          key={index}
+          key={user.id}
           title={user.name}
           isActive={user.name === selectedUser?.name}
           onToggle={() => {
-            onToggleUser(user.name === selectedUser?.name ? null : user);
+            onToggleUser(user.id);
           }}
         />
       ))}

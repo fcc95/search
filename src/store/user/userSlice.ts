@@ -2,12 +2,11 @@ import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { UserResponse, User } from "./user.types";
 import { getUser } from "./userAction";
+const { v4: uuidv4 } = require("uuid");
 
 export type UserState = {
   users: Array<User>;
   selectedUser: User | null;
-  totalUserNumber: number;
-  activePageNumber: number;
   hasError: boolean;
   loading: "idle" | "pending" | "succeeded" | "failed";
 };
@@ -15,18 +14,19 @@ export type UserState = {
 const initialState: UserState = {
   users: [],
   selectedUser: null,
-  totalUserNumber: -1,
-  activePageNumber: 1,
   hasError: false,
   loading: "idle",
 };
 
 export const userSlice = createSlice({
-  name: "counter",
+  name: "userSlice",
   initialState,
   reducers: {
-    selectUser(state, action: PayloadAction<User | null>) {
-      state.selectedUser = action.payload;
+    selectUser(state, action: PayloadAction<string>) {
+      state.selectedUser =
+        state.selectedUser?.id === action.payload
+          ? null
+          : state.users.find((user) => user.id === action.payload) || null;
     },
     clearSearchResult(state) {
       state.users = [];
@@ -42,8 +42,10 @@ export const userSlice = createSlice({
       .addCase(
         getUser.fulfilled,
         (state, { payload }: PayloadAction<UserResponse>) => {
-          state.users = payload.results;
-          state.totalUserNumber = payload.count;
+          state.users = payload.results.map((user) => ({
+            ...user,
+            id: uuidv4(),
+          }));
           state.loading = "succeeded";
         }
       )
