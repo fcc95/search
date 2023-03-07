@@ -5,6 +5,7 @@ import "./List.scss";
 type IProps = {
   users: Array<User>;
   selectedUser: User | null;
+  inputText: string;
   loading: boolean;
   error: boolean;
   onToggleUser: (userId: string) => void;
@@ -13,6 +14,7 @@ type IProps = {
 const List = ({
   users,
   selectedUser,
+  inputText,
   loading,
   error,
   onToggleUser,
@@ -35,6 +37,7 @@ const List = ({
         <ListItem
           key={user.id}
           title={user.name}
+          inputText={inputText}
           isActive={user.name === selectedUser?.name}
           onToggle={() => {
             onToggleUser(user.id);

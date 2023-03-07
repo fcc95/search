@@ -2,7 +2,8 @@ import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { UserResponse, User } from "./user.types";
 import { getUser } from "./userAction";
-const { v4: uuidv4 } = require("uuid");
+
+const numberReg = /\/(\d+)\/$/;
 
 export type UserState = {
   users: Array<User>;
@@ -44,7 +45,7 @@ export const userSlice = createSlice({
         (state, { payload }: PayloadAction<UserResponse>) => {
           state.users = payload.results.map((user) => ({
             ...user,
-            id: uuidv4(),
+            id: String(user.url.match(numberReg)?.[1]),
           }));
           state.loading = "succeeded";
         }

@@ -7,6 +7,7 @@ type IProps = {
 
 const PersonDetailItem = ({ title, value }: IProps) => {
   let showValue = value;
+
   if (typeof value === "object") {
     showValue = value.map((item: string) => `${item} \n`);
   }

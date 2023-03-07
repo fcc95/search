@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import List from "./components/list/List";
 import Search from "./components/search/Search";
 import PersonDetail from "./components/personDetail/PersonDetail";
@@ -16,36 +16,33 @@ const App = () => {
     (state) => state.user
   );
 
-  const debouncedSearch = useRef(
-    debounce(async (text: string) => {
-      if (text.length > 1) {
-        dispatch(getUser({ text }));
-      } else {
-        dispatch(clearSearchResult());
-      }
-    }, 400)
-  ).current;
-
-  useEffect(() => {
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch]);
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((text: string) => {
+        if (text.length > 1) {
+          dispatch(getUser({ text }));
+        } else {
+          dispatch(clearSearchResult());
+        }
+      }, 400),
+    [dispatch]
+  );
 
   const onToggleUser = (userId: string) => {
     dispatch(selectUser(userId));
   };
 
-  async function handleChange(value: string) {
+  const handleChange = (value: string) => {
     setText(value);
     debouncedSearch(value);
-  }
+  };
 
   return (
     <div className="App">
       <Search value={text} updateText={handleChange} />
       <List
         users={users}
+        inputText={text}
         selectedUser={selectedUser}
         onToggleUser={onToggleUser}
         loading={loading === "pending"}
